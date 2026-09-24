@@ -1,6 +1,7 @@
 {
   "name": "recipeappmobile",
-  "main": "node_modules/expo/AppEntry.js",  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "version": "1.0.0",
   "dependencies": {
     "@expo/ui": "~57.0.19",
     "@react-navigation/native": "^7.4.1",
@@ -12,7 +13,6 @@
     "expo-glass-effect": "~57.0.3",
     "expo-image": "~57.0.5",
     "expo-linking": "~57.0.10",
-    "expo-router": "~57.0.22",
     "expo-splash-screen": "~57.0.9",
     "expo-status-bar": "~57.0.1",
     "expo-symbols": "~57.0.3",
