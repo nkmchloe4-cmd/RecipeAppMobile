@@ -10,11 +10,20 @@ function getApiBaseUrl() {
 export const API_BASE_URL = getApiBaseUrl();
 
 export async function getRecipes() {
-  const response = await fetch(`${API_BASE_URL}/api/recipes`);
-  if (!response.ok) {
-    throw new Error("Kunde inte hämta recept från servern.");
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 5000);
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/recipes`, { signal: controller.signal });
+    if (!response.ok) {
+      throw new Error("Kunde inte hämta recept från servern.");
+    }
+    return await response.json();
+  } catch (err) {
+    throw new Error("Kunde inte hämta recept från servern. Kontrollera att backend körs.");
+  } finally {
+    clearTimeout(timeout);
   }
-  return response.json();
 }
 
 export function getImageUrl(imagePath) {
