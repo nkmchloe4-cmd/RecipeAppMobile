@@ -67,6 +67,4 @@ Appen hämtar automatiskt din dators IP-adress för att ansluta till backend.
 
 ## Status
 
-## Status
-
 Klart: navigation mellan lista, detaljvy och formulär. Recept hämtas, skapas och uppdateras mot eget API. Bilder visas korrekt (endast läsning, ingen bilduppladdning från mobilappen).
