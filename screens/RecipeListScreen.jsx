@@ -1,6 +1,14 @@
-import { useState, useEffect } from "react";
-import { FlatList, TouchableOpacity, Image, View, Text, StyleSheet, ActivityIndicator } from "react-native";
-import { getRecipes, getImageUrl } from "../services/recipeApi";
+import { useEffect, useState } from "react";
+import {
+    ActivityIndicator,
+    FlatList,
+    Image,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+} from "react-native";
+import { getImageUrl, getRecipes } from "../services/recipeApi";
 
 function RecipeListScreen({ navigation }) {
   const [recipes, setRecipes] = useState([]);
@@ -33,21 +41,36 @@ function RecipeListScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Recept</Text>
+
+      <TouchableOpacity
+        style={styles.addButton}
+        onPress={() => navigation.navigate("RecipeForm")}
+      >
+        <Text style={styles.addButtonText}>+ Lägg till recept</Text>
+      </TouchableOpacity>
+
       <FlatList
         data={recipes}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.recipeItem}
-            onPress={() => navigation.navigate("RecipeDetail", { recipe: item })}
+            onPress={() =>
+              navigation.navigate("RecipeDetail", { recipe: item })
+            }
           >
             {item.imagePath && (
-              <Image source={{ uri: getImageUrl(item.imagePath) }} style={styles.recipeImage} />
+              <Image
+                source={{ uri: getImageUrl(item.imagePath) }}
+                style={styles.recipeImage}
+              />
             )}
             <View style={styles.recipeInfo}>
               <Text style={styles.recipeName}>{item.name}</Text>
               <Text style={styles.recipeDescription}>{item.description}</Text>
-              <Text style={styles.recipeCookTime}>Tillagningstid: {item.cookTime}</Text>
+              <Text style={styles.recipeCookTime}>
+                Tillagningstid: {item.cookTime}
+              </Text>
             </View>
           </TouchableOpacity>
         )}
@@ -58,15 +81,36 @@ function RecipeListScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, backgroundColor: "#fff" },
-  center: { flex: 1, justifyContent: "center", alignItems: "center", padding: 16 },
+  center: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 16,
+  },
   errorText: { fontSize: 16, color: "#c0392b", textAlign: "center" },
   title: { fontSize: 24, fontWeight: "bold", marginBottom: 16 },
-  recipeItem: { flexDirection: "row", marginBottom: 16, borderWidth: 1, borderColor: "#ccc", borderRadius: 8, overflow: "hidden" },
+  recipeItem: {
+    flexDirection: "row",
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    overflow: "hidden",
+  },
   recipeImage: { width: 100, height: 100 },
   recipeInfo: { flex: 1, padding: 8 },
   recipeName: { fontSize: 18, fontWeight: "bold" },
   recipeDescription: { fontSize: 14, color: "#666", marginVertical: 4 },
   recipeCookTime: { fontSize: 12, color: "#999" },
+
+  addButton: {
+    backgroundColor: "#d35400",
+    padding: 12,
+    borderRadius: 8,
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  addButtonText: { color: "#fff", fontWeight: "bold", fontSize: 15 },
 });
 
 export default RecipeListScreen;

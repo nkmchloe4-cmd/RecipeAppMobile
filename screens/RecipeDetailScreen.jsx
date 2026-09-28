@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-function RecipeDetailScreen({ route }) {
+function RecipeDetailScreen({ route, navigation }) {
   const { recipe } = route.params;
 
   return (
@@ -8,6 +8,14 @@ function RecipeDetailScreen({ route }) {
       <Text style={styles.title}>{recipe.name}</Text>
       <Text style={styles.description}>{recipe.description}</Text>
       <Text style={styles.cookTime}>Tillagningstid: {recipe.cookTime}</Text>
+
+      <TouchableOpacity
+        style={styles.editButton}
+        onPress={() => navigation.navigate("RecipeForm", { recipe })}
+      >
+        <Text style={styles.editButtonText}>Redigera recept</Text>
+      </TouchableOpacity>
+
       <Text style={styles.sectionTitle}>Ingredienser:</Text>
       {recipe.ingredients.map((ingredient, index) => (
         <Text key={index} style={styles.ingredient}>
@@ -29,6 +37,14 @@ const styles = StyleSheet.create({
   title: { fontSize: 24, fontWeight: "bold", marginBottom: 8 },
   description: { fontSize: 16, marginBottom: 8 },
   cookTime: { fontSize: 15, color: "#666", marginBottom: 16 },
+  editButton: {
+    backgroundColor: "#d35400",
+    padding: 12,
+    borderRadius: 8,
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  editButtonText: { color: "#fff", fontWeight: "bold", fontSize: 15 },
   sectionTitle: {
     fontSize: 18,
     fontWeight: "bold",

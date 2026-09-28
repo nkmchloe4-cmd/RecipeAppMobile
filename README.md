@@ -54,6 +54,8 @@ Appen hämtar automatiskt din dators IP-adress för att ansluta till backend.
 
 - Lista alla recept med bild, namn, beskrivning och tillagningstid
 - Klicka på ett recept för att se fullständiga detaljer (ingredienser och steg)
+- Lägga till nytt recept
+- Redigera befintligt recept via förifyllt formulär
 - Tydligt felmeddelande om recepten inte kan hämtas (t.ex. om backend inte körs)
 - Gränssnitt anpassat för mobil skärmstorlek och touch-interaktion
 
@@ -65,4 +67,6 @@ Appen hämtar automatiskt din dators IP-adress för att ansluta till backend.
 
 ## Status
 
-Klart: navigation mellan lista och detaljvy, recept hämtas från eget API, bilder visas korrekt.
+## Status
+
+Klart: navigation mellan lista, detaljvy och formulär. Recept hämtas, skapas och uppdateras mot eget API. Bilder visas korrekt (endast läsning, ingen bilduppladdning från mobilappen).
