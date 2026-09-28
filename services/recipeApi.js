@@ -9,20 +9,57 @@ function getApiBaseUrl() {
 
 export const API_BASE_URL = getApiBaseUrl();
 
-export async function getRecipes() {
+async function fetchWithTimeout(url, options = {}, timeoutMs = 5000) {
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 5000);
-
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    const response = await fetch(`${API_BASE_URL}/api/recipes`, { signal: controller.signal });
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+export async function getRecipes() {
+  try {
+    const response = await fetchWithTimeout(`${API_BASE_URL}/api/recipes`);
     if (!response.ok) {
       throw new Error("Kunde inte hämta recept från servern.");
     }
     return await response.json();
   } catch (err) {
     throw new Error("Kunde inte hämta recept från servern. Kontrollera att backend körs.");
-  } finally {
-    clearTimeout(timeout);
+  }
+}
+
+export async function createRecipe(recipe) {
+  try {
+    const response = await fetchWithTimeout(`${API_BASE_URL}/api/recipes`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(recipe),
+    });
+    if (!response.ok) {
+      throw new Error("Kunde inte lägga till receptet.");
+    }
+    return await response.json();
+  } catch (err) {
+    throw new Error("Kunde inte lägga till receptet. Kontrollera att backend körs.");
+  }
+}
+
+export async function updateRecipe(id, recipe) {
+  try {
+    const response = await fetchWithTimeout(`${API_BASE_URL}/api/recipes/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(recipe),
+    });
+    if (!response.ok) {
+      throw new Error("Kunde inte uppdatera receptet.");
+    }
+    return await response.json();
+  } catch (err) {
+    throw new Error("Kunde inte uppdatera receptet. Kontrollera att backend körs.");
   }
 }
 
